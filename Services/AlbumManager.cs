@@ -26,6 +26,8 @@ namespace Services
             album.Sarkilar = new List<Sarki>();
             int sarkiSayisi = RandomGenerator.GenerateSarkiNumber(6, 15);
 
+            _repoManager.Album.AddAlbums(album);
+            _repoManager.Save();  
             for (int i = 0; i < sarkiSayisi; i++)
             {
                 Sarki yeniSarki = _sarkiManager.CreateSarki(new Sarki 
@@ -37,8 +39,6 @@ namespace Services
                 });
                 album.Sarkilar.Add(yeniSarki);
             }
-
-            _repoManager.Album.AddAlbums(album);
             _repoManager.Save();
             return album;
         }

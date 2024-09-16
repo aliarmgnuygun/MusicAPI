@@ -25,6 +25,9 @@ namespace Services
 
             int albumSayisi = sanatci.AlbumSayisi;
 
+            _repoManager.Sanatci.Add(sanatci);
+            _repoManager.Save();
+
             for (int i = 0; i < albumSayisi; i++)
             {
                 Album yeniAlbum = _albumManager.CreateOneAlbum(new Album 
@@ -35,7 +38,7 @@ namespace Services
                 });
                 sanatci.Albumler.Add(yeniAlbum);
             }
-            _repoManager.Sanatci.Add(sanatci);
+            
             _repoManager.Save();
             return sanatci;
         }
