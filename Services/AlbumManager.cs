@@ -28,7 +28,13 @@ namespace Services
 
             for (int i = 0; i < sarkiSayisi; i++)
             {
-                Sarki yeniSarki = _sarkiManager.CreateSarki(new Sarki());
+                Sarki yeniSarki = _sarkiManager.CreateSarki(new Sarki 
+                { 
+                    AlbumId = album.Id,
+                    SanatciId = album.SanatciId, 
+                    Sanatci = album.Sanatci, 
+                    Album = album 
+                });
                 album.Sarkilar.Add(yeniSarki);
             }
 

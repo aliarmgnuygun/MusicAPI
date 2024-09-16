@@ -5,22 +5,22 @@ namespace Repositories.EFCore
     public class RepositoryManager : IRepositoryManager
     {
         private readonly RepositoryContext _context;
-        private readonly Lazy<ISanatciRepository> _sanatciRepository;
-        private readonly Lazy<IAlbumRepository> _albumRepository;
-        private readonly Lazy<ISarkiRepository> _sarkiRepository;
+        private readonly ISanatciRepository _sanatciRepository;
+        private readonly IAlbumRepository _albumRepository;
+        private readonly ISarkiRepository _sarkiRepository;
 
-        public RepositoryManager(RepositoryContext context)
+        public RepositoryManager(RepositoryContext context, ISanatciRepository sanatciRepository, IAlbumRepository albumRepository, ISarkiRepository sarkiRepository)
         {
             _context = context;
-            _sanatciRepository = new Lazy<ISanatciRepository>(() => new SanatciRepository(_context));
-            _albumRepository = new Lazy<IAlbumRepository>(() => new AlbumRepository(_context));
-            _sarkiRepository = new Lazy<ISarkiRepository>(() => new SarkiRepository(_context));
+            _sanatciRepository = sanatciRepository;
+            _albumRepository = albumRepository;
+            _sarkiRepository = sarkiRepository;
         }
-        public ISanatciRepository Sanatci => _sanatciRepository.Value;
+        public ISanatciRepository Sanatci => _sanatciRepository;
 
-        public IAlbumRepository Album => _albumRepository.Value;
+        public IAlbumRepository Album => _albumRepository;
 
-        public ISarkiRepository Sarki => _sarkiRepository.Value;
+        public ISarkiRepository Sarki => _sarkiRepository;
 
         public void Save()
         {

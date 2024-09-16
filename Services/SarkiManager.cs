@@ -17,11 +17,10 @@ namespace Services
         public Sarki CreateSarki(Sarki sarki)
         {
             sarki.Ad = RandomGenerator.GenerateRandomString(15);
+
             _repositoryManager.Sarki.AddOneSarki(sarki);
             _repositoryManager.Save();
-
             return sarki;
-
         }
     }
 }

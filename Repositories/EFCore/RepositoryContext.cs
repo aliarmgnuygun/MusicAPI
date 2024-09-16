@@ -17,6 +17,14 @@ namespace Repositories.EFCore
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.Entity<Album>()
+                .HasOne(a => a.Sanatci)         
+                .WithMany(s => s.Albumler)      
+                .HasForeignKey(a => a.SanatciId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
             modelBuilder.Entity<Sarki>()
                 .HasOne(s => s.Album)
                 .WithMany(a => a.Sarkilar)

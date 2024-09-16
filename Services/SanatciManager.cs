@@ -8,15 +8,13 @@ namespace Services
 {
     public class SanatciManager : ISanatciService
     {
-        private readonly IRepositoryManager _manager;
+        private readonly IRepositoryManager _repoManager;
         private readonly IAlbumService _albumManager;
-        //private readonly IServiceManager _serviceManager;
 
         public SanatciManager(IRepositoryManager manager, IAlbumService albumManager)
         {
-            _manager = manager;
+            _repoManager = manager;
             _albumManager = albumManager;
-            // _serviceManager = serviceManager;
         }
 
         public Sanatci CreateOneSanatci(Sanatci sanatci)
@@ -29,25 +27,29 @@ namespace Services
 
             for (int i = 0; i < albumSayisi; i++)
             {
-                Album yeniAlbum = _albumManager.CreateOneAlbum(new Album());
+                Album yeniAlbum = _albumManager.CreateOneAlbum(new Album 
+                { 
+                    SanatciId = sanatci.Id,
+                    Sanatci = sanatci,
+                    Sarkilar = new List<Sarki>()
+                });
                 sanatci.Albumler.Add(yeniAlbum);
-                _manager.Album.AddAlbums(yeniAlbum);
             }
-            _manager.Sanatci.Add(sanatci);
-            _manager.Save();
+            _repoManager.Sanatci.Add(sanatci);
+            _repoManager.Save();
             return sanatci;
         }
         
 
         public IEnumerable<Sanatci> GetAllSanatcilar(bool trackChanges)
         {
-           return _manager.Sanatci.GetAllSanatcilar(trackChanges);
+           return _repoManager.Sanatci.GetAllSanatcilar(trackChanges);
             
         }
 
         public Sanatci GetSanatciById(int id, bool trackChanges)
         {
-            var sanatci = _manager.Sanatci.GetSanatciById(id, trackChanges);
+            var sanatci = _repoManager.Sanatci.GetSanatciById(id, trackChanges);
             if (sanatci is null)
             {
                 throw new Exception("Sanatci bulunamadi");
